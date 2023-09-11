@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to bottom, rgb(31, 226, 31), rgb(44, 83, 211));
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+    .todoApp {
+        max-width: 75% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .todoApp {
+        max-width: 50% !important;
+    }
+}
+
+.allTodo {
+    background-color: aliceblue;
+    border: 1px solid rgb(204, 184, 184);
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.allTodo .titleAndDeleteAll {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.allTodo .taskRow {
+    border: 1px solid gray;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 0.5rem;
+}
+
+.allTodo .taskRow .updateQuery button {
+    background: none !important;
+    text-decoration: none;
+}
+
+.allTodo .taskRow .deleteQuery .dqBtn {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+    margin-left: auto;
+}
+
+.allTodo .done .updateQuery button {
+    text-decoration: line-through;
+}
+
+.allTodo .taskRow .updateQuery .iconify {
+    margin-bottom: -0.3rem;
+    vertical-align: unset;
+    margin-left: 1rem;
+    margin-right: 0.3rem;
+}
+
+.blankDiv {
+    border: 1px solid gray;
+    border-radius: 5px;
+}

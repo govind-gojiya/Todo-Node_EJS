@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+</head>
+
+<body>
+    <div class="container todoApp mt-4">
+        <form action="/add" method="post" autocomplete="off">
+            <div class="row g-3">
+                <div class="col-sm-9 col">
+                    <input type="text" class="form-control" name="newTask" placeholder="Enter Your New Task." aria-label="Task" id="addNewTask" onkeyup="filterTodos()" value="<%= textGiven %>">
+                </div>
+                <div class="col-sm-3 col d-flex ms-auto">
+                    <% if(button) { %>
+                        <button type="submit" class="btn btn-primary w-100"><span class="iconify-inline" data-icon="carbon:add-alt"></span> Add</button>
+                        <% } else { %>
+                            <button type="submit" class="btn btn-primary w-100" disabled><span class="iconify-inline" data-icon="carbon:add-alt"></span> Add</button>
+                            <% } %>
+                </div>
+            </div>
+        </form>
+        <form action="/" method="POST" class="d-none" id="searchForm">
+            <input type="text" name="searchText" id="searchText">
+        </form>
+        <div class="mt-5 allTodo">
+            <div class="titleAndDeleteAll">
+                <h3 class="mb-0">Todo List</h3>
+                <% if(allTodo.length > 0) { %>
+                    <form action="/deleteAll" method="get" class="ms-auto">
+                        <button type="submit" class="btn btn-danger float-end dqBtn"><span class="iconify-inline" data-icon="fa-solid:trash-alt"></span></button>
+                    </form>
+            </div>
+            <% allTodo.forEach((Todo) => { %>
+                <% if(!Todo.Completed) { %>
+                    <div class="notDone taskRow">
+                        <form action="/<%= Todo._id %>?_method=PATCH" method="post" class="updateQuery"><button type="submit" class="border-0"><span class="iconify-inline" data-icon="ph:square-duotone" data-width="30" data-height="25" style="color: #d33;"></span>
+                                    <%= Todo.Task %>
+                                </button>
+                        </form>
+                        <form action="/updateTask/<%= Todo._id %>?_method=PATCH" method="post" class="ms-auto me-3" id="updateTaskNameForm">
+                            <input type="text" name="updateTask" id="<%= Todo.Task %>" class="d-none" value="<%= Todo.Task %>">
+                            <button type="submit" class="btn btn-success float-end" onclick="updateName('<%= Todo.Task %>')"><span class="iconify-inline" data-icon="fluent:notepad-edit-20-filled"></span></button>
+                        </form>
+                        <form action="/<%= Todo._id %>?_method=DELETE" method="post" class="deleteQuery">
+                            <button type="submit" class="btn btn-danger float-end dqBtn" disabled><span class="iconify-inline" data-icon="fa-solid:trash-alt"></span></button>
+                        </form>
+                    </div>
+                    <% } else { %>
+                        <div class="done taskRow">
+                            <form action="/<%= Todo._id %>?_method=PATCH" method="post" class="updateQuery"><button type="submit" class="border-0"><span class="iconify-inline" data-icon="ant-design:check-square-twotone" data-width="30" data-height="25" style="color: green;"></span>
+                                        <%= Todo.Task %>
+                                    </button>
+                            </form>
+                            <form action="/updateTask/<%= Todo._id %>?_method=PATCH" method="post" class="ms-auto me-3" id="updateTaskNameForm">
+                                <input type="text" name="updateTask" id="<%= Todo.Task %>" class="d-none" value="<%= Todo.Task %>">
+                                <button type="submit" class="btn btn-success float-end" onclick="updateName('<%= Todo.Task %>')"><span class="iconify-inline" data-icon="fluent:notepad-edit-20-filled"></span></button>
+                            </form>
+                            <form action="/<%= Todo._id %>?_method=DELETE" method="post" class="deleteQuery">
+                                <button type="submit" class="btn btn-danger float-end dqBtn"><span class="iconify-inline" data-icon="fa-solid:trash-alt"></span></button>
+                            </form>
+                        </div>
+                        <% }}); %>
+
+                            <% } else { %>
+                                <form action="/deleteAll" method="get" class="deleteQuery ms-auto">
+                                    <button type="submit" class="btn btn-danger float-end dqBtn" disabled><span class="iconify-inline" data-icon="fa-solid:trash-alt"></span></button>
+                                </form>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center py-5 blankDiv">
+            <p class="mb-0">
+                <%= message[0] %>
+            </p>
+            <p class="mb-0 text-center">
+                <%= message[1] %>
+            </p>
+        </div>
+        <% } %>
+    </div>
+    </div>
+    <script src="script/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
